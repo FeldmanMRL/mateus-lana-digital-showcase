@@ -157,7 +157,7 @@ function Portfolio() {
           <nav aria-label="Navegação principal" className="hidden items-center gap-7 text-xs font-semibold text-muted-foreground md:flex">
             <a href="#expertise" className="nav-link">Expertise</a><a href="#experiencia" className="nav-link">Experiência</a><a href="#projetos" className="nav-link">Projetos</a><a href="#contato" className="nav-link">Contato</a>
           </nav>
-          <a href="#contato" className="rounded-md border border-primary/35 px-4 py-2 text-xs font-bold text-primary transition-colors hover:bg-cyan-soft">Vamos conversar</a>
+          <a href="#contato" className="rounded-md border border-primary/35 px-4 py-2 text-xs font-bold text-primary transition-colors hover:bg-accent-soft">Vamos conversar</a>
         </div>
       </header>
 
@@ -171,7 +171,7 @@ function Portfolio() {
           <div className="mt-9 flex flex-wrap gap-3"><a href="#projetos" className="shimmer-button inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3.5 text-sm font-extrabold text-primary-foreground">Explorar projetos <ArrowDown className="size-4"/></a><a href={cvAsset.url} download target="_blank" rel="noreferrer" className="glass-panel inline-flex items-center gap-2 rounded-md px-6 py-3.5 text-sm font-bold text-foreground transition-colors hover:border-primary/40"><Download className="size-4"/> Baixar CV</a></div>
         </div>
         <div className="reveal relative mx-auto w-full max-w-md" style={{ transitionDelay:"120ms" }}>
-          <div className="absolute -inset-5 rounded-full bg-cyan-soft blur-3xl" />
+          <div className="absolute -inset-5 rounded-full bg-accent-soft blur-3xl" />
           <div className="glass-panel neon-shadow relative overflow-hidden rounded-lg p-2"><div className="spotlight-portrait relative aspect-[4/5] overflow-hidden rounded-md" onMouseMove={moveSpotlight} onMouseLeave={(e)=>e.currentTarget.style.setProperty("--spot-size","0px")}><img src={portraitAsset.url} alt="Retrato profissional de Mateus Lana" className="size-full object-cover object-top"/><img src={portraitAsset.url} alt="" aria-hidden className="spotlight-grayscale size-full object-cover object-top"/></div><div className="absolute inset-x-5 bottom-5 flex items-end justify-between rounded-md border border-border bg-background/75 p-4 backdrop-blur-xl"><div><p className="text-[10px] font-bold text-primary">DIREÇÃO CRIATIVA</p><p className="mt-1 text-sm font-semibold">27 anos · Minas Gerais</p></div><BadgeCheck className="size-5 text-primary"/></div></div>
         </div>
       </section>
