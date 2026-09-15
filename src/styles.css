@@ -269,6 +269,28 @@
   box-shadow: 0 0 0 7px color-mix(in oklab,var(--primary) 10%,transparent),0 0 22px var(--primary);
 }
 
+@property --spot-size { syntax: "<length>"; inherits: true; initial-value: 0px; }
+
+.spotlight-portrait {
+  --spot-x: 50%;
+  --spot-y: 40%;
+  --spot-size: 0px;
+  transition: --spot-size .5s ease;
+}
+.spotlight-grayscale {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  filter: grayscale(1) brightness(.94);
+  -webkit-mask-image: radial-gradient(circle var(--spot-size) at var(--spot-x) var(--spot-y), transparent 0%, black 78%);
+  mask-image: radial-gradient(circle var(--spot-size) at var(--spot-x) var(--spot-y), transparent 0%, black 78%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spotlight-grayscale { display: none; }
+  .spotlight-portrait { transition: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { animation-duration:.01ms!important; animation-iteration-count:1!important; scroll-behavior:auto!important; transition-duration:.01ms!important; }
   .reveal { opacity:1; transform:none; }
