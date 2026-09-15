@@ -96,6 +96,15 @@ function TiltCard({ children, className = "" }: { children: React.ReactNode; cla
   return <article onMouseMove={move} onMouseLeave={(e) => { e.currentTarget.style.transform = ""; }} className={`interactive-card transition-[transform,box-shadow,border-color] duration-300 hover:border-primary/40 hover:shadow-[0_18px_65px_color-mix(in_oklab,var(--primary)_12%,transparent)] ${className}`}>{children}</article>;
 }
 
+const moveSpotlight = (event: MouseEvent<HTMLDivElement>) => {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const el = event.currentTarget;
+  const rect = el.getBoundingClientRect();
+  el.style.setProperty("--spot-x", `${event.clientX - rect.left}px`);
+  el.style.setProperty("--spot-y", `${event.clientY - rect.top}px`);
+  el.style.setProperty("--spot-size", "200px");
+};
+
 function Portfolio() {
   const [scrolled, setScrolled] = useState(false);
   const [selected, setSelected] = useState<(typeof projects)[number] | null>(null);
@@ -163,7 +172,7 @@ function Portfolio() {
         </div>
         <div className="reveal relative mx-auto w-full max-w-md" style={{ transitionDelay:"120ms" }}>
           <div className="absolute -inset-5 rounded-full bg-cyan-soft blur-3xl" />
-          <div className="glass-panel neon-shadow relative overflow-hidden rounded-lg p-2"><img src={portraitAsset.url} alt="Retrato profissional de Mateus Lana" className="aspect-[4/5] w-full rounded-md object-cover object-top grayscale transition duration-700 hover:grayscale-0"/><div className="absolute inset-x-5 bottom-5 flex items-end justify-between rounded-md border border-border bg-background/75 p-4 backdrop-blur-xl"><div><p className="text-[10px] font-bold text-primary">DIREÇÃO CRIATIVA</p><p className="mt-1 text-sm font-semibold">27 anos · Minas Gerais</p></div><BadgeCheck className="size-5 text-primary"/></div></div>
+          <div className="glass-panel neon-shadow relative overflow-hidden rounded-lg p-2"><div className="spotlight-portrait relative aspect-[4/5] overflow-hidden rounded-md" onMouseMove={moveSpotlight} onMouseLeave={(e)=>e.currentTarget.style.setProperty("--spot-size","0px")}><img src={portraitAsset.url} alt="Retrato profissional de Mateus Lana" className="size-full object-cover object-top"/><img src={portraitAsset.url} alt="" aria-hidden className="spotlight-grayscale size-full object-cover object-top"/></div><div className="absolute inset-x-5 bottom-5 flex items-end justify-between rounded-md border border-border bg-background/75 p-4 backdrop-blur-xl"><div><p className="text-[10px] font-bold text-primary">DIREÇÃO CRIATIVA</p><p className="mt-1 text-sm font-semibold">27 anos · Minas Gerais</p></div><BadgeCheck className="size-5 text-primary"/></div></div>
         </div>
       </section>
 
