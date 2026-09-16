@@ -165,6 +165,10 @@
 @keyframes shimmer { 0%{ transform:translateX(-160%) skewX(-20deg) } 100%{ transform:translateX(260%) skewX(-20deg) } }
 @keyframes pulse-ring { 0%,100%{ box-shadow:0 0 0 0 color-mix(in oklab,var(--primary) 35%,transparent) } 50%{ box-shadow:0 0 0 7px transparent } }
 @keyframes progress-glint { 0%{ transform:translateX(-120%) } 100%{ transform:translateX(280%) } }
+@keyframes badge-breathe { 0%,100%{ transform:translateY(0); border-color:var(--border) } 50%{ transform:translateY(-3px); border-color:color-mix(in oklab,var(--primary) 34%,transparent) } }
+@keyframes icon-float { 0%,100%{ transform:translateY(0) rotate(0) } 50%{ transform:translateY(-5px) rotate(4deg) } }
+@keyframes title-glint { 0%,72%{ background-position:140% 50% } 100%{ background-position:-40% 50% } }
+@keyframes play-pulse { 0%,100%{ box-shadow:0 0 0 0 color-mix(in oklab,var(--primary) 30%,transparent) } 50%{ box-shadow:0 0 0 9px transparent } }
 
 @utility glass-panel { background:var(--surface); border:1px solid var(--border); backdrop-filter:blur(18px); }
 @utility neon-shadow { box-shadow:0 0 42px color-mix(in oklab,var(--primary) 13%,transparent); }
@@ -205,6 +209,7 @@
   position: relative;
   isolation: isolate;
   will-change: transform;
+  transform-style: preserve-3d;
 }
 .interactive-card::before {
   content: "";
@@ -218,6 +223,49 @@
   transition: opacity .3s ease;
 }
 .interactive-card:hover::before { opacity: 1; }
+.interactive-card > * { transform:translateZ(0); transition:transform .35s ease; }
+.interactive-card:hover > * { transform:translateZ(18px); }
+
+.cursor-aura {
+  width: 360px;
+  height: 360px;
+  border-radius: 999px;
+  opacity: var(--cursor-opacity,0);
+  background: radial-gradient(circle,color-mix(in oklab,var(--primary) 10%,transparent),transparent 67%);
+  transform:translate3d(calc(var(--cursor-x,50vw) - 50%),calc(var(--cursor-y,50vh) - 50%),0);
+  transition:opacity .35s ease;
+  mix-blend-mode:screen;
+}
+
+.hero-depth { --hero-x:0; --hero-y:0; perspective:1200px; }
+.hero-copy { transform:translate3d(calc(var(--hero-x) * -10px),calc(var(--hero-y) * -7px),0); transition:transform .45s cubic-bezier(.2,.8,.2,1); }
+.hero-portrait { transform:translate3d(calc(var(--hero-x) * 18px),calc(var(--hero-y) * 12px),0) rotateY(calc(var(--hero-x) * 3deg)) rotateX(calc(var(--hero-y) * -3deg)); transition:opacity .75s ease,transform .5s cubic-bezier(.2,.8,.2,1); }
+
+.kinetic-title span {
+  background:linear-gradient(105deg,var(--primary) 22%,color-mix(in oklab,var(--foreground) 75%,var(--primary)) 46%,var(--primary) 67%);
+  background-size:220% 100%;
+  background-clip:text;
+  -webkit-background-clip:text;
+  color:transparent;
+  animation:title-glint 5s ease-in-out infinite;
+}
+
+.availability-badge { animation:badge-breathe 4s ease-in-out infinite; transition:background-color .25s ease,box-shadow .25s ease; }
+.availability-badge:nth-child(2) { animation-delay:.35s; }
+.availability-badge:nth-child(3) { animation-delay:.7s; }
+.availability-badge:nth-child(4) { animation-delay:1.05s; }
+.availability-badge:hover { background:var(--accent-soft); box-shadow:0 8px 28px color-mix(in oklab,var(--primary) 12%,transparent); }
+
+.reveal-left { transform:translateX(-34px); }
+.reveal-scale { transform:translateY(18px) scale(.965); }
+.reveal-rise { transform:translateY(34px) rotateX(5deg); transform-origin:bottom; }
+.reveal-left.revealed,.reveal-scale.revealed,.reveal-rise.revealed { transform:translate(0) scale(1) rotateX(0); }
+
+.competency-card:hover .card-icon { animation:icon-float 1.2s ease-in-out infinite; filter:drop-shadow(0 0 9px color-mix(in oklab,var(--primary) 55%,transparent)); }
+.project-card .project-caption { transition:transform .45s cubic-bezier(.2,.8,.2,1); }
+.project-card:hover .project-caption { transform:translateY(-5px); }
+.project-play { animation:play-pulse 2.6s ease-in-out infinite; transition:transform .3s ease,background-color .3s ease; }
+.project-card:hover .project-play { transform:scale(1.12) rotate(8deg); background:var(--primary); color:var(--primary-foreground); }
 
 .skill-progress {
   position: relative;
@@ -258,6 +306,7 @@
   box-shadow: 0 0 16px color-mix(in oklab,var(--primary) 55%,transparent);
   transform: scaleY(var(--timeline-progress));
   transform-origin: top;
+  transition:transform .08s linear;
 }
 .timeline-node {
   z-index: 1;
@@ -296,4 +345,12 @@
   .reveal { opacity:1; transform:none; }
   .skill-progress { width:var(--skill-width); }
   .timeline-track { --timeline-progress:1; }
+  .cursor-aura { display:none; }
+  .hero-copy,.hero-portrait { transform:none; }
+  .availability-badge,.kinetic-title span,.project-play { animation:none; }
+}
+
+@media (pointer:coarse) {
+  .cursor-aura { display:none; }
+  .interactive-card:hover > * { transform:none; }
 }
