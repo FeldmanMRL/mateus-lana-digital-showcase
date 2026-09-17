@@ -169,6 +169,7 @@
 @keyframes icon-float { 0%,100%{ transform:translateY(0) rotate(0) } 50%{ transform:translateY(-5px) rotate(4deg) } }
 @keyframes title-glint { 0%,72%{ background-position:140% 50% } 100%{ background-position:-40% 50% } }
 @keyframes play-pulse { 0%,100%{ box-shadow:0 0 0 0 color-mix(in oklab,var(--primary) 30%,transparent) } 50%{ box-shadow:0 0 0 9px transparent } }
+@keyframes ticker-scroll { from{ transform:translateX(0) } to{ transform:translateX(-50%) } }
 
 @utility glass-panel { background:var(--surface); border:1px solid var(--border); backdrop-filter:blur(18px); }
 @utility neon-shadow { box-shadow:0 0 42px color-mix(in oklab,var(--primary) 13%,transparent); }
@@ -255,6 +256,13 @@
 .availability-badge:nth-child(3) { animation-delay:.7s; }
 .availability-badge:nth-child(4) { animation-delay:1.05s; }
 .availability-badge:hover { background:var(--accent-soft); box-shadow:0 8px 28px color-mix(in oklab,var(--primary) 12%,transparent); }
+
+.qualification-ticker {
+  mask-image:linear-gradient(90deg,transparent,black 7%,black 93%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,transparent,black 7%,black 93%,transparent);
+}
+.ticker-track { animation:ticker-scroll 42s linear infinite; will-change:transform; }
+.qualification-ticker:hover .ticker-track { animation-play-state:paused; }
 
 .reveal-left { transform:translateX(-34px); }
 .reveal-scale { transform:translateY(18px) scale(.965); }
@@ -348,6 +356,8 @@
   .cursor-aura { display:none; }
   .hero-copy,.hero-portrait { transform:none; }
   .availability-badge,.kinetic-title span,.project-play { animation:none; }
+  .ticker-track { animation:none; transform:none; }
+  .qualification-ticker { overflow-x:auto; mask-image:none; -webkit-mask-image:none; }
 }
 
 @media (pointer:coarse) {
