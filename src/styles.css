@@ -237,6 +237,10 @@
   transition:opacity .35s ease;
   mix-blend-mode:screen;
 }
+.cursor-trail {
+  filter: drop-shadow(0 0 5px color-mix(in oklab,var(--primary) 68%,transparent));
+  mix-blend-mode: screen;
+}
 
 .hero-depth { --hero-x:0; --hero-y:0; perspective:1200px; }
 .hero-copy { transform:translate3d(calc(var(--hero-x) * -10px),calc(var(--hero-y) * -7px),0); transition:transform .45s cubic-bezier(.2,.8,.2,1); }
@@ -354,6 +358,7 @@
   .skill-progress { width:var(--skill-width); }
   .timeline-track { --timeline-progress:1; }
   .cursor-aura { display:none; }
+  .cursor-trail { display:none; }
   .hero-copy,.hero-portrait { transform:none; }
   .availability-badge,.kinetic-title span,.project-play { animation:none; }
   .ticker-track { animation:none; transform:none; }
@@ -362,5 +367,6 @@
 
 @media (pointer:coarse) {
   .cursor-aura { display:none; }
+  .cursor-trail { display:none; }
   .interactive-card:hover > * { transform:none; }
 }
