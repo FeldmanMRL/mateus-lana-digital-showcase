@@ -229,7 +229,7 @@ function Portfolio() {
         </div>
       </section>
 
-      <section aria-label="Destaques" className="relative z-10 border-y border-border bg-surface/45"><div className="mx-auto grid max-w-7xl grid-cols-1 divide-y divide-border px-5 sm:grid-cols-3 sm:divide-x sm:divide-y-0 lg:px-8">{[["03+","anos em comunicação"],["04","núcleos de expertise"],["C1","espanhol"]].map(([n,l])=><div key={l} className="reveal px-5 py-8"><strong className="text-3xl text-primary">{n}</strong><p className="mt-1 text-[10px] font-bold uppercase text-muted-foreground">{l}</p></div>)}</div></section>
+      <section aria-label="Destaques" className="relative z-10 border-y border-border bg-surface/45"><div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-border px-0 sm:grid-cols-4 sm:divide-y-0 lg:px-0">{[["03+","anos em comunicação"],["04","núcleos de expertise"],["C1","espanhol"],["B1","inglês"]].map(([n,l])=><div key={l} className="reveal px-5 py-8 text-center sm:text-left"><strong className="text-3xl text-primary">{n}</strong><p className="mt-1 text-[10px] font-bold uppercase text-muted-foreground">{l}</p></div>)}</div></section>
 
       <section id="expertise" className="relative z-10 mx-auto max-w-7xl px-5 py-28 lg:px-8">
         <SectionTitle index="01" label="Domínio técnico" title="Ferramentas que transformam intenção em impacto." />
