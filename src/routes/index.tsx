@@ -43,6 +43,18 @@ const competencies = [
   { icon: Globe2, title: "Idiomas", text: "Espanhol C1 · Inglês B1" },
 ];
 
+const qualificationTicker = [
+  "Operador de aeronaves não tripuladas — Drone (Asa Rotativa)",
+  "Código SARPAS RUXHSB",
+  "Carteira Nacional de Habilitação — Categoria B",
+  "Audiovisual — Captação e operação de Drone DJI",
+  "Edição de vídeo cinematográfica · Motion Graphics · Fotografia",
+  "Criatividade & Inovação — Inteligência Artificial · Gestão de Projetos · Branding · Copywriting",
+  "Ferramentas Visuais — Adobe Premiere Pro · After Effects · Photoshop · Canva",
+  "Tráfego & Dados — Google Ads · Google Analytics · TikTok Ads · LinkedIn Ads · Facebook Ads · Power BI",
+  "Motion 3D",
+];
+
 const projects = [
   { title: "Copa Melo Viana", category: "Branding", image: p01.url, label: "Campanha esportiva" },
   { title: "Saúde Pública", category: "Gestão Pública & Turismo", image: p04.url, label: "Comunicação de serviço" },
@@ -203,6 +215,17 @@ function Portfolio() {
         <div className="hero-portrait reveal reveal-scale relative mx-auto w-full max-w-md" style={{ transitionDelay:"120ms" }}>
           <div className="absolute -inset-5 rounded-full bg-accent-soft blur-3xl" />
           <div className="glass-panel neon-shadow relative overflow-hidden rounded-lg p-2"><div className="spotlight-portrait relative aspect-[4/5] overflow-hidden rounded-md" onMouseMove={moveSpotlight} onMouseLeave={(e)=>e.currentTarget.style.setProperty("--spot-size","0px")}><img src={portraitAsset.url} alt="Retrato profissional de Mateus Lana" className="size-full object-cover object-top"/><img src={portraitAsset.url} alt="" aria-hidden className="spotlight-grayscale size-full object-cover object-top"/></div><div className="absolute inset-x-5 bottom-5 flex items-end justify-between rounded-md border border-border bg-background/75 p-4 backdrop-blur-xl"><div><p className="text-[10px] font-bold text-primary">DIREÇÃO CRIATIVA</p><p className="mt-1 text-sm font-semibold">27 anos · Minas Gerais</p></div><BadgeCheck className="size-5 text-primary"/></div></div>
+        </div>
+      </section>
+
+      <section aria-label="Qualificações e ferramentas" className="qualification-ticker relative z-10 overflow-hidden border-y border-border bg-background/90 py-4">
+        <div className="ticker-track flex w-max items-center" aria-hidden="true">
+          {[0, 1].map((copy) => <div key={copy} className="flex shrink-0 items-center">
+            {qualificationTicker.map((item) => <div key={`${copy}-${item}`} className="flex shrink-0 items-center">
+              <span className="whitespace-nowrap px-7 text-[11px] font-semibold uppercase text-foreground/85 md:px-9 md:text-xs">{item}</span>
+              <span className="size-1.5 shrink-0 rotate-45 bg-primary shadow-[0_0_10px_var(--primary)]" />
+            </div>)}
+          </div>)}
         </div>
       </section>
 
