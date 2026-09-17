@@ -121,6 +121,7 @@ function Portfolio() {
   const [scrolled, setScrolled] = useState(false);
   const [selected, setSelected] = useState<(typeof projects)[number] | null>(null);
   const [sent, setSent] = useState(false);
+  const cursorTrailRef = useRef<HTMLCanvasElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
 
@@ -173,6 +174,82 @@ function Portfolio() {
     };
   }, []);
 
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce), (pointer: coarse)").matches) return;
+    const canvas = cursorTrailRef.current;
+    const context = canvas?.getContext("2d");
+    if (!canvas || !context) return;
+
+    type TrailPoint = { x: number; y: number; born: number };
+    const points: TrailPoint[] = [];
+    const lifetime = 520;
+    let animationFrame = 0;
+    let width = 0;
+    let height = 0;
+    let scale = 1;
+
+    const resize = () => {
+      scale = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.round(width * scale);
+      canvas.height = Math.round(height * scale);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      context.setTransform(scale, 0, 0, scale, 0, 0);
+    };
+
+    const addPoint = (event: globalThis.PointerEvent) => {
+      const last = points.at(-1);
+      const distance = last ? Math.hypot(event.clientX - last.x, event.clientY - last.y) : 99;
+      if (distance > 3) points.push({ x: event.clientX, y: event.clientY, born: performance.now() });
+      if (points.length > 32) points.shift();
+    };
+
+    const draw = (now: number) => {
+      context.clearRect(0, 0, width, height);
+      while (points[0] && now - points[0].born > lifetime) points.shift();
+
+      if (points.length > 1) {
+        const primary = getComputedStyle(document.documentElement).getPropertyValue("--primary").trim();
+        const accent = getComputedStyle(document.documentElement).getPropertyValue("--accent").trim();
+        const trace = (stroke: string, lineWidth: number, opacity: number) => {
+          context.beginPath();
+          context.moveTo(points[0]?.x ?? 0, points[0]?.y ?? 0);
+          for (let index = 1; index < points.length - 1; index += 1) {
+            const current = points[index];
+            const next = points[index + 1];
+            if (!current || !next) continue;
+            context.quadraticCurveTo(current.x, current.y, (current.x + next.x) / 2, (current.y + next.y) / 2);
+          }
+          const tip = points.at(-1);
+          if (tip) context.lineTo(tip.x, tip.y);
+          context.strokeStyle = stroke;
+          context.lineWidth = lineWidth;
+          context.lineCap = "round";
+          context.lineJoin = "round";
+          context.globalAlpha = opacity;
+          context.stroke();
+        };
+        const oldestAge = Math.min((now - (points[0]?.born ?? now)) / lifetime, 1);
+        trace(accent, 12, .08 * (1 - oldestAge * .45));
+        trace(primary, 4, .72 * (1 - oldestAge * .35));
+        context.globalAlpha = 1;
+      }
+      animationFrame = requestAnimationFrame(draw);
+    };
+
+    resize();
+    window.addEventListener("resize", resize, { passive: true });
+    window.addEventListener("pointermove", addPoint, { passive: true });
+    animationFrame = requestAnimationFrame(draw);
+    return () => {
+      window.removeEventListener("resize", resize);
+      window.removeEventListener("pointermove", addPoint);
+      cancelAnimationFrame(animationFrame);
+    };
+  }, []);
+
   const moveHero = (event: MouseEvent<HTMLElement>) => {
     if (window.matchMedia("(prefers-reduced-motion: reduce), (pointer: coarse)").matches) return;
     const rect = event.currentTarget.getBoundingClientRect();
@@ -187,6 +264,7 @@ function Portfolio() {
 
   return (
     <main className="mesh-bg min-h-screen text-foreground">
+      <canvas ref={cursorTrailRef} aria-hidden className="cursor-trail pointer-events-none fixed inset-0 z-30" />
       <div aria-hidden className="cursor-aura pointer-events-none fixed left-0 top-0 z-30" />
       <div aria-hidden className="grid-lines pointer-events-none fixed inset-0 z-0 opacity-30" />
       <div aria-hidden className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
