@@ -278,7 +278,7 @@ function Portfolio() {
         </div>
       </header>
 
-      <section ref={heroRef} onMouseMove={moveHero} onMouseLeave={(event) => { event.currentTarget.style.setProperty("--hero-x", "0"); event.currentTarget.style.setProperty("--hero-y", "0"); }} id="inicio" className="hero-depth relative z-10 mx-auto grid min-h-[94svh] max-w-7xl items-center gap-12 px-5 pb-20 pt-32 lg:grid-cols-[1.22fr_.78fr] lg:px-8">
+      <section ref={heroRef} onMouseMove={moveHero} onMouseLeave={(event) => { event.currentTarget.style.setProperty("--hero-x", "0"); event.currentTarget.style.setProperty("--hero-y", "0"); }} id="inicio" className="hero-depth relative z-10 mx-auto grid min-h-[min(94svh,960px)] max-w-7xl items-center gap-12 px-5 pb-20 pt-32 lg:grid-cols-[1.22fr_.78fr] lg:px-8">
         <div className="hero-copy reveal reveal-left max-w-4xl">
           <div className="mb-7 flex flex-wrap items-center gap-3 text-xs font-semibold text-muted-foreground"><span className="text-primary">PORTFÓLIO / 2026</span><span className="h-px w-12 bg-border"/><span className="inline-flex items-center gap-1.5"><MapPin className="size-3.5"/> Belo Vale — MG</span></div>
           <h1 className="kinetic-title text-glow text-[clamp(3.8rem,9vw,8.4rem)] font-extrabold leading-[.8] text-foreground">MATEUS<br/><span className="text-primary">LANA</span></h1>
