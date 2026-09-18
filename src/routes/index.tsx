@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, type ComponentType, type FormEvent, type M
 import {
   ArrowDown, ArrowUpRight, BadgeCheck, BarChart3, Camera, ChevronRight,
   Clapperboard, Download, Globe2, Instagram, Linkedin, Mail, MapPin,
-  Building2, Laptop, MessageCircle, Play, Sparkles, X, Zap,
+  Building2, Laptop, MessageCircle, Play, Rocket, Sparkles, X, Zap,
 } from "lucide-react";
 
 import cvAsset from "@/assets/curriculo-mateus-lana.pdf.asset.json";
@@ -156,12 +156,21 @@ function Portfolio() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce), (pointer: coarse)").matches) return;
     let pointerFrame = 0;
+    let previousX = window.innerWidth / 2;
+    let previousY = window.innerHeight / 2;
     const updatePointer = (event: globalThis.MouseEvent) => {
       cancelAnimationFrame(pointerFrame);
       pointerFrame = requestAnimationFrame(() => {
+        const deltaX = event.clientX - previousX;
+        const deltaY = event.clientY - previousY;
+        if (Math.hypot(deltaX, deltaY) > 1) {
+          document.documentElement.style.setProperty("--cursor-angle", `${Math.atan2(deltaY, deltaX) * 180 / Math.PI + 45}deg`);
+        }
         document.documentElement.style.setProperty("--cursor-x", `${event.clientX}px`);
         document.documentElement.style.setProperty("--cursor-y", `${event.clientY}px`);
         document.documentElement.style.setProperty("--cursor-opacity", "1");
+        previousX = event.clientX;
+        previousY = event.clientY;
       });
     };
     const hidePointer = () => document.documentElement.style.setProperty("--cursor-opacity", "0");
@@ -266,6 +275,7 @@ function Portfolio() {
     <main className="mesh-bg min-h-screen text-foreground">
       <canvas ref={cursorTrailRef} aria-hidden className="cursor-trail pointer-events-none fixed inset-0 z-30" />
       <div aria-hidden className="cursor-aura pointer-events-none fixed left-0 top-0 z-30" />
+      <span aria-hidden className="rocket-cursor pointer-events-none fixed left-0 top-0 z-50 grid place-items-center"><Rocket className="size-6" strokeWidth={1.8} /></span>
       <div aria-hidden className="grid-lines pointer-events-none fixed inset-0 z-0 opacity-20" />
 
       <header className={`fixed inset-x-0 top-0 z-40 mx-auto transition-all duration-500 ${scrolled ? "py-3" : "py-6"}`}>
