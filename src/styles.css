@@ -75,7 +75,7 @@
   --secondary: oklch(0.24 0.02 85);
   --secondary-foreground: oklch(0.92 0.015 90);
   --muted: oklch(0.22 0.014 88);
-  --muted-foreground: oklch(0.7 0.02 85);
+  --muted-foreground: oklch(0.76 0.018 85);
   --accent: oklch(0.78 0.13 78);
   --accent-foreground: oklch(0.13 0.015 85);
   --destructive: oklch(0.577 0.245 27.325);
@@ -83,8 +83,8 @@
   --border: oklch(0.82 0.08 85 / 16%);
   --input: oklch(0.3 0.02 85);
   --ring: oklch(0.85 0.12 88);
-  --surface: oklch(0.19 0.014 88 / 76%);
-  --surface-strong: oklch(0.23 0.02 85 / 92%);
+  --surface: oklch(0.185 0.014 88 / 78%);
+  --surface-strong: oklch(0.23 0.02 85 / 94%);
   --accent-soft: oklch(0.8 0.1 85 / 20%);
   --line: oklch(0.8 0.07 85 / 22%);
   --chart-1: oklch(0.85 0.12 88);
@@ -171,14 +171,22 @@
 @keyframes play-pulse { 0%,100%{ box-shadow:0 0 0 0 color-mix(in oklab,var(--primary) 30%,transparent) } 50%{ box-shadow:0 0 0 9px transparent } }
 @keyframes ticker-scroll { from{ transform:translateX(0) } to{ transform:translateX(-50%) } }
 
-@utility glass-panel { background:var(--surface); border:1px solid var(--border); backdrop-filter:blur(18px); }
-@utility neon-shadow { box-shadow:0 0 42px color-mix(in oklab,var(--primary) 13%,transparent); }
-@utility mesh-bg { background:radial-gradient(circle at 17% 14%,color-mix(in oklab,var(--primary) 12%,transparent),transparent 31%),radial-gradient(circle at 86% 35%,color-mix(in oklab,var(--accent) 10%,transparent),transparent 28%),var(--background); }
+@utility glass-panel { background:linear-gradient(145deg,color-mix(in oklab,var(--surface) 96%,var(--primary) 4%),var(--surface)); border:1px solid var(--border); backdrop-filter:blur(18px); }
+@utility neon-shadow { box-shadow:0 24px 80px color-mix(in oklab,var(--background) 70%,transparent),0 0 42px color-mix(in oklab,var(--primary) 10%,transparent); }
+@utility mesh-bg { background:linear-gradient(112deg,color-mix(in oklab,var(--primary) 3%,transparent),transparent 28%,color-mix(in oklab,var(--accent) 2%,transparent) 67%,transparent),var(--background); }
 @utility text-glow { text-shadow:0 0 30px color-mix(in oklab,var(--primary) 35%,transparent); }
 @utility reveal { opacity:0; transform:translateY(28px); transition:opacity .75s ease,transform .75s cubic-bezier(.2,.8,.2,1); }
 @utility revealed { opacity:1; transform:translateY(0); }
 @utility shimmer-button { position:relative; overflow:hidden; isolation:isolate; &::after{ content:""; position:absolute; inset:-20%; width:38%; background:linear-gradient(90deg,transparent,color-mix(in oklab,var(--primary-foreground) 45%,transparent),transparent); animation:shimmer 3.2s ease-in-out infinite; } }
-@utility grid-lines { background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px); background-size:64px 64px; mask-image:linear-gradient(to bottom,black,transparent 72%); }
+@utility grid-lines { background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px); background-size:80px 80px; mask-image:linear-gradient(to bottom,black,transparent 68%); }
+
+.section-shell,
+.section-band { padding-block: clamp(6rem,10vw,9rem); }
+.section-title { position:relative; }
+.section-title::after { content:""; position:absolute; right:0; top:.5rem; width:clamp(2.5rem,9vw,8rem); height:1px; background:linear-gradient(90deg,var(--border),transparent); }
+.portrait-frame::before { content:""; position:absolute; inset:1rem -1rem -1rem 1rem; z-index:-1; border:1px solid color-mix(in oklab,var(--primary) 30%,transparent); border-radius:var(--radius); }
+.education-panel { box-shadow:0 24px 80px color-mix(in oklab,var(--background) 65%,transparent); }
+.contact-panel { box-shadow:0 30px 90px color-mix(in oklab,var(--background) 75%,transparent); }
 
 .prose-justify {
   text-align: justify;
@@ -212,6 +220,8 @@
   will-change: transform;
   transform-style: preserve-3d;
 }
+.skill-card { border-top-color:color-mix(in oklab,var(--primary) 32%,transparent); }
+.competency-card { min-height:15rem; }
 .interactive-card::before {
   content: "";
   position: absolute;
@@ -276,6 +286,8 @@
 .competency-card:hover .card-icon { animation:icon-float 1.2s ease-in-out infinite; filter:drop-shadow(0 0 9px color-mix(in oklab,var(--primary) 55%,transparent)); }
 .project-card .project-caption { transition:transform .45s cubic-bezier(.2,.8,.2,1); }
 .project-card:hover .project-caption { transform:translateY(-5px); }
+.project-card img { filter:saturate(.9) contrast(1.03); }
+.project-card:hover img { filter:saturate(1.05) contrast(1.03); }
 .project-play { animation:play-pulse 2.6s ease-in-out infinite; transition:transform .3s ease,background-color .3s ease; }
 .project-card:hover .project-play { transform:scale(1.12) rotate(8deg); background:var(--primary); color:var(--primary-foreground); }
 
